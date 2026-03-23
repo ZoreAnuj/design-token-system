@@ -1,0 +1,27 @@
+name: Publish Packages
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Publish Packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Write .npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_JS }}" >> .npmrc
+
+      - name: Publish
+        run: pnpm release --no-git-checks

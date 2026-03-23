@@ -1,0 +1,9 @@
+module.exports = {
+  plugins: [
+    require("postcss-import"),
+    require("tailwindcss/nesting"),
+    require("tailwindcss")("./src/utilities/tailwind.config.js"),
+    require("postcss-discard-comments"),
+    require("postcss-minify"),
+  ],
+};
